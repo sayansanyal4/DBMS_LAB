@@ -1,0 +1,743 @@
+SQL> create table SALES_ORDER_DETAILS(order_no varchar2(6) references sales_order,product_no varchar2(6) references product_master,qtyordered number(8),qtydisp number(8),productrate number(10,2));
+
+Table created.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+BIN$ULx3DmdkSrKkGoppHErzcg==$0 TABLE
+CLIENT_MASTER                  TABLE
+PRODUCT_MASTER                 TABLE
+SALESMAN_MASTER16              TABLE
+SALES_ORDER                    TABLE
+SALES_ORDER_DETAILS            TABLE
+
+6 rows selected.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyqrdered, qtydisp, productrate) values('O19001','P00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyqrdered, qtydisp, productrate) values('O19001','P00001',4,4,525)
+                                                       *
+ERROR at line 1:
+ORA-00904: "QTYQRDERED": invalid identifier
+
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CSE1A.SYS_C0011194) violated - parent key not
+found
+
+
+SQL> select constraint_name, constraint_type, search_condition from user_constraints where table_name = 'SALES_ORDER_DETAILS';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+SYS_C0011193                   R
+
+
+SYS_C0011194                   R
+
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc sales_order;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDERNO                                   NOT NULL VARCHAR2(6)
+ CLIENT                                             VARCHAR2(6)
+ ORDERDATE                                 NOT NULL DATE
+ DELYADDR                                           VARCHAR2(25)
+ SALESMANNO                                         VARCHAR2(6)
+ DELYTYPE                                           CHAR(1)
+ BILLYN                                             CHAR(1)
+ DELYDATE                                           DATE
+ ORDERSTATUS                                        VARCHAR2(10)
+
+SQL> desc product_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PRODUCT_NO                                NOT NULL VARCHAR2(6)
+ DESCRIPTION                               NOT NULL VARCHAR2(15)
+ PROFITPERCENT                                      NUMBER(4,2)
+ UNITMEASURE                               NOT NULL VARCHAR2(10)
+ QTYONHAND                                 NOT NULL NUMBER(8)
+ REORDERVL                                 NOT NULL NUMBER(8)
+ SELLPRICE                                 NOT NULL NUMBER(8,2)
+ COSTPRICE                                 NOT NULL NUMBER(8,2)
+
+SQL>  insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525)
+                                 *
+ERROR at line 1:
+ORA-00904: "ORDERNO": invalid identifier
+
+
+SQL>  select * from product_master;
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND  REORDERVL  SELLPRICE
+------ --------------- ------------- ---------- ---------- ---------- ----------
+ COSTPRICE
+----------
+p00001 t-shirt                     5 piece             200         50        350
+       250
+
+p0345  shirt                       6 piece             150         50        500
+       350
+
+p06734 cotton jeans                5 piece             100         20        600
+       450
+
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND  REORDERVL  SELLPRICE
+------ --------------- ------------- ---------- ---------- ---------- ----------
+ COSTPRICE
+----------
+p07865 jeans                       5 piece             100         20        750
+       500
+
+p07868 trousers                    2 piece             150         50        850
+       550
+
+p07885 pull overs                2.5 piece              80         30        700
+       450
+
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND  REORDERVL  SELLPRICE
+------ --------------- ------------- ---------- ---------- ---------- ----------
+ COSTPRICE
+----------
+p07965 denim_shirt                 4 piece             100         40        350
+       250
+
+p07975 lycra tops                  5 piece              70         30        300
+       175
+
+p08865 skirts                      5 piece              75         30        450
+       500
+
+
+9 rows selected.
+
+SQL> select * from sales_order;
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE
+------ ------ --------- ------------------------- ------ - - ---------
+ORDERSTATU
+----------
+O19002 C0002  20-JUL-03 Pune                      S00002 F N 25-JUN-04
+cancelled
+
+O19003 C0003  21-JUL-03 Agra                      S00003 F N 26-JUN-04
+cancelled
+
+O19001 C0001  22-JUL-03 Kota                      S00001 F N 27-JUN-04
+cancelled
+
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE
+------ ------ --------- ------------------------- ------ - - ---------
+ORDERSTATU
+----------
+O19004 C0004  23-JUL-03 Goa                       S00004 F N 28-JUN-04
+cancelled
+
+
+SQL>  insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19002','p00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19002','p00001',4,4,525)
+                                 *
+ERROR at line 1:
+ORA-00904: "ORDERNO": invalid identifier
+
+
+SQL> desc sales_order_details;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDER_NO                                           VARCHAR2(6)
+ PRODUCT_NO                                         VARCHAR2(6)
+ QTYORDERED                                         NUMBER(8)
+ QTYDISP                                            NUMBER(8)
+ PRODUCTRATE                                        NUMBER(10,2)
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p00001',4,4,525);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from sales_order_details;
+
+ORDER_ PRODUC QTYORDERED    QTYDISP PRODUCTRATE
+------ ------ ---------- ---------- -----------
+O19002 p00001          4          4         525
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07965',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p07885',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p00001',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O46865','p07868',4,4,525);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O46865','p07868',4,4,525)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CSE1A.SYS_C0011193) violated - parent key not
+found
+
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07868',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07885',3,1,5250);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p00001',10,10,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p00345',4,4,1050);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p00345',4,4,1050)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CSE1A.SYS_C0011194) violated - parent key not
+found
+
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07975',4,4,1050);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p06734',1,1,12000);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p07965',1,0,8400);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p07975',1,0,1050);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p00001',10,5,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p07975',5,3,1050);
+
+1 row created.
+
+SQL> select * from sales_order_details;
+
+ORDER_ PRODUC QTYORDERED    QTYDISP PRODUCTRATE
+------ ------ ---------- ---------- -----------
+O19002 p00001          4          4         525
+O19002 p07965          4          4         525
+O19003 p07885          4          4         525
+O19001 p00001          4          4         525
+O19002 p07868          4          4         525
+O19002 p07885          3          1        5250
+O19003 p00001         10         10         525
+O19002 p07975          4          4        1050
+O19002 p06734          1          1       12000
+O19001 p07965          1          0        8400
+O19001 p07975          1          0        1050
+
+ORDER_ PRODUC QTYORDERED    QTYDISP PRODUCTRATE
+------ ------ ---------- ---------- -----------
+O19001 p00001         10          5         525
+O19003 p07975          5          3        1050
+
+13 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Microsoft Windows [Version 10.0.19045.3570]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>sqlplus
+
+SQL*Plus: Release 11.2.0.1.0 Production on Thu Nov 2 14:52:36 2023
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> conn;
+Enter user-name: CSE1A
+Enter password:
+Connected.
+SQL> desc client_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CLIENTNO                                  NOT NULL VARCHAR2(6)
+ NAME                                      NOT NULL VARCHAR2(20)
+ ADDRESS2                                           VARCHAR2(30)
+ CITY                                               VARCHAR2(15)
+ PINCODE                                            NUMBER(8)
+ STATE                                              VARCHAR2(15)
+ BALDUE                                             NUMBER(10,2)
+
+SQL> desc product_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PRODUCTNO                                 NOT NULL VARCHAR2(6)
+ DESCRIPTION                               NOT NULL VARCHAR2(15)
+ PROFITPERCENT                             NOT NULL NUMBER(4,2)
+ UNITMEASURE                               NOT NULL VARCHAR2(10)
+ QTYONHAND                                 NOT NULL NUMBER(8)
+ REORDERLVL                                NOT NULL NUMBER(8)
+ SELLPRICE                                 NOT NULL NUMBER(8,2)
+ COSTPRICE                                 NOT NULL NUMBER(8,2)
+
+SQL> desc salesman_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SALESMANNO                                NOT NULL VARCHAR2(6)
+ SALESMANNAME                              NOT NULL VARCHAR2(20)
+ ADDRESS1                                  NOT NULL VARCHAR2(30)
+ ADDRESS2                                           VARCHAR2(30)
+ CITY                                               VARCHAR2(20)
+ PINCODE                                            NUMBER(8)
+ STATE                                              VARCHAR2(20)
+ SALAMT                                    NOT NULL NUMBER(8,2)
+ TGTTOGET                                  NOT NULL NUMBER(6,2)
+ YTDSALES                                  NOT NULL NUMBER(6,2)
+ REMARKS                                            VARCHAR2(60)
+
+SQL> desc sales_order;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDERNO                                   NOT NULL VARCHAR2(6)
+ CLIENT                                             VARCHAR2(6)
+ ORDERDATE                                 NOT NULL DATE
+ DELYADDR                                           VARCHAR2(25)
+ SALESMANNO                                         VARCHAR2(6)
+ DELYTYPE                                           CHAR(1)
+ BILLYN                                             CHAR(1)
+ DELYDATE                                           DATE
+ ORDERSTATUS                                        VARCHAR2(10)
+
+SQL> desc sales_order_details;
+ERROR:
+ORA-04043: object sales_order_details does not exist
+
+
+SQL> select * from sales_order;
+
+no rows selected
+
+SQL> select * from salesman_master;
+
+SALESM SALESMANNAME         ADDRESS1
+------ -------------------- ------------------------------
+ADDRESS2                       CITY                    PINCODE
+------------------------------ -------------------- ----------
+STATE                    SALAMT   TGTTOGET   YTDSALES
+-------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00001 Aman                 A/14
+Worli                          Mumbai                   400002
+Maharashtra                3000        100         50
+Good
+
+
+SALESM SALESMANNAME         ADDRESS1
+------ -------------------- ------------------------------
+ADDRESS2                       CITY                    PINCODE
+------------------------------ -------------------- ----------
+STATE                    SALAMT   TGTTOGET   YTDSALES
+-------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00002 Omkar                65
+Nariman                        Mumbai                   400001
+Maharashtra                3000        200        100
+Good
+
+
+SALESM SALESMANNAME         ADDRESS1
+------ -------------------- ------------------------------
+ADDRESS2                       CITY                    PINCODE
+------------------------------ -------------------- ----------
+STATE                    SALAMT   TGTTOGET   YTDSALES
+-------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00003 Raj                  P-7
+Bandra                         Mumbai                   400032
+Maharashtra                3000        200        100
+Good
+
+
+SALESM SALESMANNAME         ADDRESS1
+------ -------------------- ------------------------------
+ADDRESS2                       CITY                    PINCODE
+------------------------------ -------------------- ----------
+STATE                    SALAMT   TGTTOGET   YTDSALES
+-------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00004 Ashish               A/5
+Juhu                           Mumbai                   400044
+Maharashtra                3000        200        150
+Good
+
+
+SQL> set line size 200;
+SP2-0268: linesize option not a valid number
+SQL> set linesize 200;
+SQL> select * from salesman_master;
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00001 Aman                 A/14                           Worli                          Mumbai                   400002 Maharashtra                3000        100         50
+Good
+
+S00002 Omkar                65                             Nariman                        Mumbai                   400001 Maharashtra                3000        200        100
+Good
+
+S00003 Raj                  P-7                            Bandra                         Mumbai                   400032 Maharashtra                3000        200        100
+Good
+
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00004 Ashish               A/5                            Juhu                           Mumbai                   400044 Maharashtra                3000        200        150
+Good
+
+
+SQL> select * from product_master;
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND REORDERLVL  SELLPRICE  COSTPRICE
+------ --------------- ------------- ---------- ---------- ---------- ---------- ----------
+P00001 T-Shirts                    5 Piece             200         50        350        250
+P0345  Shirts                      6 Piece             150         50        500        350
+P06734 Cotton Jeans                5 Piece             100         20        600        450
+P07865 Jeans                       5 Piece             100         20        750        500
+P07868 Trousers                    2 Piece             150         50        850        550
+P07885 Pull Overs                2.5 Piece              80         30        700        450
+P07965 Denim Shirts                4 Piece             100         40        350        250
+P07975 Lycra Tops                  5 Piece              70         30        300        175
+P08865 Skirts                      5 Piece              75         30        450        500
+
+9 rows selected.
+
+SQL> select * from sales_order;
+
+no rows selected
+
+SQL> show databases;
+SP2-0158: unknown SHOW option "databases"
+SQL> databases;
+SP2-0042: unknown command "databases" - rest of line ignored.
+SQL> show tables;
+SP2-0158: unknown SHOW option "tables"
+SQL> SELECT table_name FROM user_tables;
+
+TABLE_NAME
+------------------------------
+CLIENT_MASTER
+PRODUCT_MASTER
+SALESMAN_MASTER
+SALES_ORDER
+
+SQL> drop table sales_order;
+
+Table dropped.
+
+SQL> SELECT table_name FROM user_tables;
+
+TABLE_NAME
+------------------------------
+CLIENT_MASTER
+PRODUCT_MASTER
+SALESMAN_MASTER
+
+SQL> create table sales_order(orderno varchar2(6) primary key check(orderno like 'O%'),clientno varchar2(6) references client_master,orderdate date not null,delyaddr varchar2(25),salesmanno varchar2(6) references salesman_master,delytype char(1) default 'F',billyn char(1), delydate date,orderstatus varchar2(10),check(delydate>orderdate),check(orderstatus in ('In Process','Fulfilled','Back Order','Cancelled'),check(delytype in ('P','F')));
+create table sales_order(orderno varchar2(6) primary key check(orderno like 'O%'),clientno varchar2(6) references client_master,orderdate date not null,delyaddr varchar2(25),salesmanno varchar2(6) references salesman_master,delytype char(1) default 'F',billyn char(1), delydate date,orderstatus varchar2(10),check(delydate>orderdate),check(orderstatus in ('In Process','Fulfilled','Back Order','Cancelled'),check(delytype in ('P','F')))
+
+
+                                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table sales_order(orderno varchar2(6) primary key check(orderno like 'O%'),clientno varchar2(6) references client_master,orderdate date not null,delyaddr varchar2(25),salesmanno varchar2(6) references salesman_master,delytype char(1) default 'F',billyn char(1), delydate date,orderstatus varchar2(10),check(delydate>orderdate),check(orderstatus in ('In Process','Fulfilled','Back Order','Cancelled')),check(delytype in ('P','F')));
+
+Table created.
+
+SQL> SELECT table_name FROM user_tables;                                                                                                                                      
+TABLE_NAME
+------------------------------
+CLIENT_MASTER
+PRODUCT_MASTER
+SALESMAN_MASTER
+SALES_ORDER
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','In Process');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','In Process')
+                                *
+ERROR at line 1:
+ORA-00904: "CLIENT": invalid identifier
+
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','In Process');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19002','C00002','27-June-03','Maharastra','S00002','P','N','25-June-04','Cancelled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O46865','C00003','20-Feb-02','Maharastra','S00003','F','Y','18-Feb-04','Fulfilled');
+
+1 row created.
+
+SQL> select * from sales_order;                                                                                                                                               
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE  ORDERSTATU
+------ ------ --------- ------------------------- ------ - - --------- ----------
+O19001 C00001 20-JUL-02 Maharastra                S00001 F N 12-JUN-04 In Process
+O19002 C00002 27-JUN-03 Maharastra                S00002 P N 25-JUN-04 Cancelled
+O46865 C00003 20-FEB-02 Maharastra                S00003 F Y 18-FEB-04 Fulfilled
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19003','C00001','07-Apr-02','Maharastra','S00001','F','Y','03-Apr-04','Fulfilled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O46866','C00004','22-May-02','Maharastra','S00002','P','N','20-May-04','Cancelled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19008','C00005','26-July-02','Maharastra','S00004','F','N','24-May-04','In Process');
+
+1 row created.
+
+SQL> select * from sales_order;
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE  ORDERSTATU
+------ ------ --------- ------------------------- ------ - - --------- ----------
+O19001 C00001 20-JUL-02 Maharastra                S00001 F N 12-JUN-04 In Process
+O19002 C00002 27-JUN-03 Maharastra                S00002 P N 25-JUN-04 Cancelled
+O46865 C00003 20-FEB-02 Maharastra                S00003 F Y 18-FEB-04 Fulfilled
+O19003 C00001 07-APR-02 Maharastra                S00001 F Y 03-APR-04 Fulfilled
+O46866 C00004 22-MAY-02 Maharastra                S00002 P N 20-MAY-04 Cancelled
+O19008 C00005 26-JUL-02 Maharastra                S00004 F N 24-MAY-04 In Process
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create table sales_order_details(order_no varchar2(6) references sales_order,product_no varchar2(6) references product_master,qtyordered number(8),qtydisp number(8),productrate number(10,2));
+
+Table created.
+
+SQL> drop table sales_order_details;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+BIN$3YLaR3A/TXS4BJiDjYaQWg==$0 TABLE
+BIN$Cff5O5HQREuIBSxSE3w9Dg==$0 TABLE
+CLIENT_MASTER                  TABLE
+PRODUCT_MASTER                 TABLE
+SALESMAN_MASTER                TABLE
+SALES_ORDER                    TABLE
+
+6 rows selected.
+
+SQL> desc client_master;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ CLIENTNO                                                                                                          NOT NULL VARCHAR2(6)
+ NAME                                                                                                              NOT NULL VARCHAR2(20)
+ ADDRESS2                                                                                                                   VARCHAR2(30)
+ CITY                                                                                                                       VARCHAR2(15)
+ PINCODE                                                                                                                    NUMBER(8)
+ STATE                                                                                                                      VARCHAR2(15)
+ BALDUE                                                                                                                     NUMBER(10,2)
+
+SQL> desc product_master;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ PRODUCTNO                                                                                                         NOT NULL VARCHAR2(6)
+ DESCRIPTION                                                                                                       NOT NULL VARCHAR2(15)
+ PROFITPERCENT                                                                                                     NOT NULL NUMBER(4,2)
+ UNITMEASURE                                                                                                       NOT NULL VARCHAR2(10)
+ QTYONHAND                                                                                                         NOT NULL NUMBER(8)
+ REORDERLVL                                                                                                        NOT NULL NUMBER(8)
+ SELLPRICE                                                                                                         NOT NULL NUMBER(8,2)
+ COSTPRICE                                                                                                         NOT NULL NUMBER(8,2)
+
+SQL> desc salesman_master;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SALESMANNO                                                                                                        NOT NULL VARCHAR2(6)
+ SALESMANNAME                                                                                                      NOT NULL VARCHAR2(20)
+ ADDRESS1                                                                                                          NOT NULL VARCHAR2(30)
+ ADDRESS2                                                                                                                   VARCHAR2(30)
+ CITY                                                                                                                       VARCHAR2(20)
+ PINCODE                                                                                                                    NUMBER(8)
+ STATE                                                                                                                      VARCHAR2(20)
+ SALAMT                                                                                                            NOT NULL NUMBER(8,2)
+ TGTTOGET                                                                                                          NOT NULL NUMBER(6,2)
+ YTDSALES                                                                                                          NOT NULL NUMBER(6,2)
+ REMARKS                                                                                                                    VARCHAR2(60)
+
+SQL> desc sales_order;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ORDERNO                                                                                                           NOT NULL VARCHAR2(6)
+ CLIENTNO                                                                                                                   VARCHAR2(6)
+ ORDERDATE                                                                                                         NOT NULL DATE
+ DELYADDR                                                                                                                   VARCHAR2(25)
+ SALESMANNO                                                                                                                 VARCHAR2(6)
+ DELYTYPE                                                                                                                   CHAR(1)
+ BILLYN                                                                                                                     CHAR(1)
+ DELYDATE                                                                                                                   DATE
+ ORDERSTATUS                                                                                                                VARCHAR2(10)
+
+SQL> create table sales_order_details(orderno varchar2(6) references sales_order,productno varchar2(6) references product_master,qtyordered number(8),qtydisp number(8),produc
+trate number(10,2));
+
+Table created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19002','P00001',4,4,525);
+
+1 row created.
+
+SQL> delete from sales_order_details;
+
+1 row deleted.
+
+SQL> select * from sales_order_details;
+
+no rows selected
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19001','P07965',2,1,8400);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19001','P07885',2,1,5250);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19002','P00001',10,0,525);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19002','P07868',3,3,3150);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O46865','P07885',3,1,5250);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O46865','P00001',10,10,525);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O46865','P0345',4,4,1050);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19003','P0345',2,2,1050);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19003','P06734',1,1,12000);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O46866','P07965',1,0,8400);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O46866','P07975',1,0,1050);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19008','P00001',10,5,525);
+
+1 row created.
+
+SQL> insert into SALES_ORDER_DETAILS(orderno, productno, qtyordered, qtydisp, productrate) values('O19008','P07975',5,3,1050);
+
+1 row created.
+
+SQL>

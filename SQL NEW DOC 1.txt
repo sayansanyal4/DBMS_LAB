@@ -1,0 +1,273 @@
+SQL> create table SALES_ORDER_DETAILS(order_no varchar2(6) references sales_order,product_no varchar2(6) references product_master,qtyordered number(8),qtydisp number(8),productrate number(10,2));
+
+Table created.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+BIN$ULx3DmdkSrKkGoppHErzcg==$0 TABLE
+CLIENT_MASTER                  TABLE
+PRODUCT_MASTER                 TABLE
+SALESMAN_MASTER16              TABLE
+SALES_ORDER                    TABLE
+SALES_ORDER_DETAILS            TABLE
+
+6 rows selected.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyqrdered, qtydisp, productrate) values('O19001','P00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyqrdered, qtydisp, productrate) values('O19001','P00001',4,4,525)
+                                                       *
+ERROR at line 1:
+ORA-00904: "QTYQRDERED": invalid identifier
+
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CSE1A.SYS_C0011194) violated - parent key not
+found
+
+
+SQL> select constraint_name, constraint_type, search_condition from user_constraints where table_name = 'SALES_ORDER_DETAILS';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+SYS_C0011193                   R
+
+
+SYS_C0011194                   R
+
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc sales_order;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDERNO                                   NOT NULL VARCHAR2(6)
+ CLIENT                                             VARCHAR2(6)
+ ORDERDATE                                 NOT NULL DATE
+ DELYADDR                                           VARCHAR2(25)
+ SALESMANNO                                         VARCHAR2(6)
+ DELYTYPE                                           CHAR(1)
+ BILLYN                                             CHAR(1)
+ DELYDATE                                           DATE
+ ORDERSTATUS                                        VARCHAR2(10)
+
+SQL> desc product_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PRODUCT_NO                                NOT NULL VARCHAR2(6)
+ DESCRIPTION                               NOT NULL VARCHAR2(15)
+ PROFITPERCENT                                      NUMBER(4,2)
+ UNITMEASURE                               NOT NULL VARCHAR2(10)
+ QTYONHAND                                 NOT NULL NUMBER(8)
+ REORDERVL                                 NOT NULL NUMBER(8)
+ SELLPRICE                                 NOT NULL NUMBER(8,2)
+ COSTPRICE                                 NOT NULL NUMBER(8,2)
+
+SQL>  insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19001','P00001',4,4,525)
+                                 *
+ERROR at line 1:
+ORA-00904: "ORDERNO": invalid identifier
+
+
+SQL>  select * from product_master;
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND  REORDERVL  SELLPRICE
+------ --------------- ------------- ---------- ---------- ---------- ----------
+ COSTPRICE
+----------
+p00001 t-shirt                     5 piece             200         50        350
+       250
+
+p0345  shirt                       6 piece             150         50        500
+       350
+
+p06734 cotton jeans                5 piece             100         20        600
+       450
+
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND  REORDERVL  SELLPRICE
+------ --------------- ------------- ---------- ---------- ---------- ----------
+ COSTPRICE
+----------
+p07865 jeans                       5 piece             100         20        750
+       500
+
+p07868 trousers                    2 piece             150         50        850
+       550
+
+p07885 pull overs                2.5 piece              80         30        700
+       450
+
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND  REORDERVL  SELLPRICE
+------ --------------- ------------- ---------- ---------- ---------- ----------
+ COSTPRICE
+----------
+p07965 denim_shirt                 4 piece             100         40        350
+       250
+
+p07975 lycra tops                  5 piece              70         30        300
+       175
+
+p08865 skirts                      5 piece              75         30        450
+       500
+
+
+9 rows selected.
+
+SQL> select * from sales_order;
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE
+------ ------ --------- ------------------------- ------ - - ---------
+ORDERSTATU
+----------
+O19002 C0002  20-JUL-03 Pune                      S00002 F N 25-JUN-04
+cancelled
+
+O19003 C0003  21-JUL-03 Agra                      S00003 F N 26-JUN-04
+cancelled
+
+O19001 C0001  22-JUL-03 Kota                      S00001 F N 27-JUN-04
+cancelled
+
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE
+------ ------ --------- ------------------------- ------ - - ---------
+ORDERSTATU
+----------
+O19004 C0004  23-JUL-03 Goa                       S00004 F N 28-JUN-04
+cancelled
+
+
+SQL>  insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19002','p00001',4,4,525);
+ insert into SALES_ORDER_DETAILS(orderno, product_no, qtyordered, qtydisp, productrate) values('O19002','p00001',4,4,525)
+                                 *
+ERROR at line 1:
+ORA-00904: "ORDERNO": invalid identifier
+
+
+SQL> desc sales_order_details;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDER_NO                                           VARCHAR2(6)
+ PRODUCT_NO                                         VARCHAR2(6)
+ QTYORDERED                                         NUMBER(8)
+ QTYDISP                                            NUMBER(8)
+ PRODUCTRATE                                        NUMBER(10,2)
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p00001',4,4,525);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from sales_order_details;
+
+ORDER_ PRODUC QTYORDERED    QTYDISP PRODUCTRATE
+------ ------ ---------- ---------- -----------
+O19002 p00001          4          4         525
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07965',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p07885',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p00001',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O46865','p07868',4,4,525);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O46865','p07868',4,4,525)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CSE1A.SYS_C0011193) violated - parent key not
+found
+
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07868',4,4,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07885',3,1,5250);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p00001',10,10,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p00345',4,4,1050);
+ insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p00345',4,4,1050)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CSE1A.SYS_C0011194) violated - parent key not
+found
+
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p07975',4,4,1050);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19002','p06734',1,1,12000);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p07965',1,0,8400);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p07975',1,0,1050);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19001','p00001',10,5,525);
+
+1 row created.
+
+SQL>  insert into SALES_ORDER_DETAILS(order_no, product_no, qtyordered, qtydisp, productrate) values('O19003','p07975',5,3,1050);
+
+1 row created.
+
+SQL> select * from sales_order_details;
+
+ORDER_ PRODUC QTYORDERED    QTYDISP PRODUCTRATE
+------ ------ ---------- ---------- -----------
+O19002 p00001          4          4         525
+O19002 p07965          4          4         525
+O19003 p07885          4          4         525
+O19001 p00001          4          4         525
+O19002 p07868          4          4         525
+O19002 p07885          3          1        5250
+O19003 p00001         10         10         525
+O19002 p07975          4          4        1050
+O19002 p06734          1          1       12000
+O19001 p07965          1          0        8400
+O19001 p07975          1          0        1050
+
+ORDER_ PRODUC QTYORDERED    QTYDISP PRODUCTRATE
+------ ------ ---------- ---------- -----------
+O19001 p00001         10          5         525
+O19003 p07975          5          3        1050
+
+13 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL>

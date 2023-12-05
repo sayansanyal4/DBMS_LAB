@@ -1,0 +1,17 @@
+connect system;
+password: cse123
+
+//system creates user
+
+create user CSE2109 identitfied by xyz;
+This creates a user with :
+username: CSE2109
+password: xyz
+
+to grant permissions to the user for the sql server
+grant connect to CSE2109;
+
+
+connect to your account(user) with the username(CSE2109) and password(xyz)
+
+now create a table and commit

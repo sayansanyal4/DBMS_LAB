@@ -1,0 +1,593 @@
+Microsoft Windows [Version 10.0.19045.3448]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>sqlplus
+
+SQL*Plus: Release 11.2.0.1.0 Production on Thu Oct 12 14:29:34 2023
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: scott
+Enter password:
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> conn;
+Enter user-name: CSE1A
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT SYSTEM;
+Enter password:
+Connected.
+SQL> conn;
+Enter user-name: CSE1A
+Enter password:
+Connected.
+SQL> desc sales_master
+ERROR:
+ORA-04043: object sales_master does not exist
+
+
+SQL> desc client_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CLIENTNO                                  NOT NULL VARCHAR2(6)
+ NAME                                      NOT NULL VARCHAR2(20)
+ ADDRESS2                                           VARCHAR2(30)
+ CITY                                               VARCHAR2(15)
+ PINCODE                                            NUMBER(8)
+ STATE                                              VARCHAR2(15)
+ BALDUE                                             NUMBER(10,2)
+
+SQL> desc salesman_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SALESMANNO                                NOT NULL VARCHAR2(6)
+ SALESMANNAME                              NOT NULL VARCHAR2(20)
+ ADDRESS1                                  NOT NULL VARCHAR2(30)
+ ADDRESS2                                           VARCHAR2(30)
+ CITY                                               VARCHAR2(20)
+ PINCODE                                            NUMBER(8)
+ STATE                                              VARCHAR2(20)
+ SALAMT                                    NOT NULL NUMBER(8,2)
+ TGTTOGET                                  NOT NULL NUMBER(6,2)
+ YTDSALES                                  NOT NULL NUMBER(6,2)
+ REMARKS                                            VARCHAR2(60)
+
+SQL> desc product_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PRODUCTNO                                 NOT NULL VARCHAR2(6)
+ DESCRIPTION                               NOT NULL VARCHAR2(15)
+ PROFITPERCENT                             NOT NULL NUMBER(4,2)
+ UNITMEASURE                               NOT NULL VARCHAR2(10)
+ QTYONHAND                                 NOT NULL NUMBER(8)
+ REORDERLVL                                NOT NULL NUMBER(8)
+ SELLPRICE                                 NOT NULL NUMBER(8,2)
+ COSTPRICE                                 NOT NULL NUMBER(8,2)
+
+SQL> select * client_master;
+select * client_master
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from client_master;
+
+CLIENT NAME                 ADDRESS2                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE               BALDUE
+---------- --------------- ----------
+C00001 Ivan Bayross         India                          Mumbai
+    400054 Ma                   15000
+           harastra
+
+C00002 Mamta Mazumdar       India                          Madras
+    780001 Tamil Nadu               0
+
+C00003 Chhaya Bankar        India                          Mumbai
+    400057 Maharastra            5000
+
+CLIENT NAME                 ADDRESS2                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE               BALDUE
+---------- --------------- ----------
+
+C00004 Ashwini Joshi        India                          Bangalore
+    560001 Karnataka                0
+
+C00005 Hansel Colaco        India                          Mumbai
+    400060 Maharastra            2000
+
+C00006 Deepak Sharma        India                          Mangalore
+    560050 Karnataka                0
+
+CLIENT NAME                 ADDRESS2                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE               BALDUE
+---------- --------------- ----------
+
+
+6 rows selected.
+
+SQL> set line size 200;
+SP2-0268: linesize option not a valid number
+SQL> set linesize 200;
+SQL> select * from client_master;
+
+CLIENT NAME                 ADDRESS2                       CITY               PINCODE STATE               BALDUE
+------ -------------------- ------------------------------ --------------- ---------- --------------- ----------
+C00001 Ivan Bayross         India                          Mumbai              400054 Ma                   15000
+                                                                                      harastra
+
+C00002 Mamta Mazumdar       India                          Madras              780001 Tamil Nadu               0
+C00003 Chhaya Bankar        India                          Mumbai              400057 Maharastra            5000
+C00004 Ashwini Joshi        India                          Bangalore           560001 Karnataka                0
+C00005 Hansel Colaco        India                          Mumbai              400060 Maharastra            2000
+C00006 Deepak Sharma        India                          Mangalore           560050 Karnataka                0
+
+6 rows selected.
+
+SQL> select * from product_master;
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND REORDERLVL  SELLPRICE  COSTPRICE
+------ --------------- ------------- ---------- ---------- ---------- ---------- ----------
+P00001 T-Shirts                    5 Piece             200         50        350        250
+P0345  Shirts                      6 Piece             150         50        500        350
+P06734 Cotton Jeans                5 Piece             100         20        600        450
+P07865 Jeans                       5 Piece             100         20        750        500
+P07868 Trousers                    2 Piece             150         50        850        550
+P07885 Pull Overs                2.5 Piece              80         30        700        450
+P07965 Denim Shirts                4 Piece             100         40        350        250
+P07975 Lycra Tops                  5 Piece              70         30        300        175
+P08865 Skirts                      5 Piece              75         30        450        500
+
+9 rows selected.
+
+SQL> select * from salesman_master;
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00001 Aman                 A/14                           Worli                          Mumbai                   400002 Maharashtra                3000        100         50
+Good
+
+S00002 Omkar                65                             Nariman                        Mumbai                   400001 Maharashtra                3000        200        100
+Good
+
+S00003 Raj                  P-7                            Bandra                         Mumbai                   400032 Maharashtra                3000        200        100
+Good
+
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00004 Ashish               A/5                            Juhu                           Mumbai                   400044 Maharashtra                3000        200        150
+Good
+
+
+SQL> set linesize 200;
+SQL> select * from salesman_master;
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00001 Aman                 A/14                           Worli                          Mumbai                   400002 Maharashtra                3000        100         50
+Good
+
+S00002 Omkar                65                             Nariman                        Mumbai                   400001 Maharashtra                3000        200        100
+Good
+
+S00003 Raj                  P-7                            Bandra                         Mumbai                   400032 Maharashtra                3000        200        100
+Good
+
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00004 Ashish               A/5                            Juhu                           Mumbai                   400044 Maharashtra                3000        200        150
+Good
+
+
+SQL> select * from product_master;
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND REORDERLVL  SELLPRICE  COSTPRICE
+------ --------------- ------------- ---------- ---------- ---------- ---------- ----------
+P00001 T-Shirts                    5 Piece             200         50        350        250
+P0345  Shirts                      6 Piece             150         50        500        350
+P06734 Cotton Jeans                5 Piece             100         20        600        450
+P07865 Jeans                       5 Piece             100         20        750        500
+P07868 Trousers                    2 Piece             150         50        850        550
+P07885 Pull Overs                2.5 Piece              80         30        700        450
+P07965 Denim Shirts                4 Piece             100         40        350        250
+P07975 Lycra Tops                  5 Piece              70         30        300        175
+P08865 Skirts                      5 Piece              75         30        450        500
+
+9 rows selected.
+
+SQL> select * from client_master;
+
+CLIENT NAME                 ADDRESS2                       CITY               PINCODE STATE               BALDUE
+------ -------------------- ------------------------------ --------------- ---------- --------------- ----------
+C00001 Ivan Bayross         India                          Mumbai              400054 Ma                   15000
+                                                                                      harastra
+
+C00002 Mamta Mazumdar       India                          Madras              780001 Tamil Nadu               0
+C00003 Chhaya Bankar        India                          Mumbai              400057 Maharastra            5000
+C00004 Ashwini Joshi        India                          Bangalore           560001 Karnataka                0
+C00005 Hansel Colaco        India                          Mumbai              400060 Maharastra            2000
+C00006 Deepak Sharma        India                          Mangalore           560050 Karnataka                0
+
+6 rows selected.
+
+SQL> select * from salesman_master;
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00001 Aman                 A/14                           Worli                          Mumbai                   400002 Maharashtra                3000        100         50
+Good
+
+S00002 Omkar                65                             Nariman                        Mumbai                   400001 Maharashtra                3000        200        100
+Good
+
+S00003 Raj                  P-7                            Bandra                         Mumbai                   400032 Maharashtra                3000        200        100
+Good
+
+
+SALESM SALESMANNAME         ADDRESS1                       ADDRESS2                       CITY                    PINCODE STATE                    SALAMT   TGTTOGET   YTDSALES
+------ -------------------- ------------------------------ ------------------------------ -------------------- ---------- -------------------- ---------- ---------- ----------
+REMARKS
+------------------------------------------------------------
+S00004 Ashish               A/5                            Juhu                           Mumbai                   400044 Maharashtra                3000        200        150
+Good
+
+
+SQL> desc sales_order;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ORDERNO                                                                                                           NOT NULL VARCHAR2(6)
+ CLIENT                                                                                                                     VARCHAR2(6)
+ ORDERDATE                                                                                                         NOT NULL DATE
+ DELYADDR                                                                                                                   VARCHAR2(25)
+ SALESMANNO                                                                                                                 VARCHAR2(6)
+ DELYTYPE                                                                                                                   CHAR(1)
+ BILLYN                                                                                                                     CHAR(1)
+ DELYDATE                                                                                                                   DATE
+ ORDERSTATUS                                                                                                                VARCHAR2(10)
+
+SQL> select * from sales_order;
+
+no rows selected
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','12-June-04','S00001','F','N','20-July-02','In Process');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','12-June-04','S00001','F','N','20-July-02','In Process')
+                                                                                                           *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','12-June-04','Maharastra','S00001','F','N','20-July-02','In Process');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','12-June-04','Maharastra','S00001','F','N','20-July-02','In Process')
+*
+ERROR at line 1:
+ORA-02290: check constraint (CSE1A.SYS_C0011174) violated
+
+
+SQL> select constraint_name,constraint_type,search_condition from user_constraints where table_name='SALES_ORDER';
+
+CONSTRAINT_NAME                C SEARCH_CONDITION
+------------------------------ - --------------------------------------------------------------------------------
+SYS_C0011171                   C "ORDERDATE" IS NOT NULL
+SYS_C0011172                   C DELYTYPE in('P','F')
+SYS_C0011173                   C DELYDATE>ORDERDATE
+SYS_C0011174                   C ORDERSTATUS in('in progress','fulfilled','break order','cancelled')
+SYS_C0011175                   P
+SYS_C0011176                   R
+SYS_C0011177                   R
+
+7 rows selected.
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','In Process');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','In Process')
+*
+ERROR at line 1:
+ORA-02290: check constraint (CSE1A.SYS_C0011174) violated
+
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','in process');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','in process')
+*
+ERROR at line 1:
+ORA-02290: check constraint (CSE1A.SYS_C0011174) violated
+
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','in progress');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','i')
+
+              *
+ERROR at line 1:
+ORA-12899: value too large for column "CSE1A"."SALES_ORDER"."ORDERSTATUS" (actual: 11, maximum: 10)
+
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','In Process');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19002','C00002','27-June-03','Maharastra','S00002','P','N','25-June-04','Cancelled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O46865','C00003','20-Feb-02','Maharastra','S00003','F','Y','18-Feb-04','Fulfilled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O46865','C00003','20-Feb-02','Maharastra','S00003','F'
+,'Y','18-Feb-04','fulfilled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19003','C00001','07-Apr-02','Maharastra','S00001','F','Y','03-Apr-04','fulfilled');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19003','C00001','07-Apr-02','Maharastra','S00001','F','Y','03-Apr-04','fulfilled')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CSE1A.SYS_C0011175) violated
+
+
+SQL> select * from sales_order;
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE  ORDERSTATU
+------ ------ --------- ------------------------- ------ - - --------- ----------
+O19001 C00001 20-JUL-02 Maharastra                S00001 F N 12-JUN-04 cancelled
+O19002 C00002 27-JUN-03 Maharastra                S00002 P N 25-JUN-04 fulfilled
+O19003 C00003 20-FEB-02 Maharastra                S00003 P Y 18-FEB-04 fulfilled
+O46865 C00003 20-FEB-02 Maharastra                S00003 F Y 18-FEB-04 fulfilled
+
+SQL> delete sales_order where orderno = 'O19003';
+
+1 row deleted.
+
+SQL> select * from sales_order;
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE  ORDERSTATU
+------ ------ --------- ------------------------- ------ - - --------- ----------
+O19001 C00001 20-JUL-02 Maharastra                S00001 F N 12-JUN-04 cancelled
+O19002 C00002 27-JUN-03 Maharastra                S00002 P N 25-JUN-04 fulfilled
+O46865 C00003 20-FEB-02 Maharastra                S00003 F Y 18-FEB-04 fulfilled
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19003','C00001','07-Apr-02','Maharastra','S00001','F','Y','03-Apr-04','fulfilled');
+
+1 row created.
+
+SQL> select * from sales_order;
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE  ORDERSTATU
+------ ------ --------- ------------------------- ------ - - --------- ----------
+O19001 C00001 20-JUL-02 Maharastra                S00001 F N 12-JUN-04 cancelled
+O19002 C00002 27-JUN-03 Maharastra                S00002 P N 25-JUN-04 fulfilled
+O46865 C00003 20-FEB-02 Maharastra                S00003 F Y 18-FEB-04 fulfilled
+O19003 C00001 07-APR-02 Maharastra                S00001 F Y 03-APR-04 fulfilled
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O46866','C00004','22-May-02','Maharastra','S00001','F','Y','20-May-04','cancelled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19008','C00005','26-July-02','Maharastra','S00004','F','N','24-May-04','fulfiled');
+insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19008','C00005','26-July-02','Maharastra','S00004','F','N','24-May-04','fulfiled')
+*
+ERROR at line 1:
+ORA-02290: check constraint (CSE1A.SYS_C0011174) violated
+
+
+SQL> insert into sales_order(orderno,client,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19008','C00005','26-July-02','Maharastra','S00004','F','N','24-May-04','fulfilled');
+
+1 row created.
+
+SQL> select name from client_master where name like '_a%';
+
+NAME
+--------------------
+Mamta Mazumdar
+Hansel Colaco
+
+SQL> select name from client_master where city like 'M%';
+
+NAME
+--------------------
+Ivan Bayross
+Mamta Mazumdar
+Chhaya Bankar
+Hansel Colaco
+Deepak Sharma
+
+SQL> select name from client_master where city in ('Bangalore','Mangalore');
+
+NAME
+--------------------
+Ashwini Joshi
+Deepak Sharma
+
+SQL> select name from client_master where baldue>10000;
+
+NAME
+--------------------
+Ivan Bayross
+
+SQL> select * from sales_order where to_char(orderdate,'Month') = 'June';
+
+no rows selected
+
+SQL> select * from sales_order where to_char(ORDERDATE,'Month') = 'June';
+
+no rows selected
+
+SQL> select * from sales_order where CLIENT in ('C00001','C00002');
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE  ORDERSTATU
+------ ------ --------- ------------------------- ------ - - --------- ----------
+O19001 C00001 20-JUL-02 Maharastra                S00001 F N 12-JUN-04 cancelled
+O19002 C00002 27-JUN-03 Maharastra                S00002 P N 25-JUN-04 fulfilled
+O19003 C00001 07-APR-02 Maharastra                S00001 F Y 03-APR-04 fulfilled
+
+SQL> select description from product_master where sellprice>500 and sellprice <= 500;
+
+no rows selected
+
+SQL> select * from product_master where sellprice>500 and sellprice <= 500;
+
+no rows selected
+
+SQL> select * from product_master where SELLPRICE>500 and SELLPRICE <= 500;
+
+no rows selected
+
+SQL> select description from product_master where sellprice>500;
+
+DESCRIPTION
+---------------
+Cotton Jeans
+Jeans
+Trousers
+Pull Overs
+
+SQL> select sellprice*.15 new_sell_price from product_master;
+
+NEW_SELL_PRICE
+--------------
+          52.5
+            75
+            90
+         112.5
+         127.5
+           105
+          52.5
+            45
+          67.5
+
+9 rows selected.
+
+SQL> select names,city,state from client_master where state not in ('Maharashtra');
+select names,city,state from client_master where state not in ('Maharashtra')
+       *
+ERROR at line 1:
+ORA-00904: "NAMES": invalid identifier
+
+
+SQL> select name,city,state from client_master where state not in ('Maharashtra');
+
+NAME                 CITY            STATE
+-------------------- --------------- ---------------
+Ivan Bayross         Mumbai          Ma
+                                     harastra
+
+Mamta Mazumdar       Madras          Tamil Nadu
+Chhaya Bankar        Mumbai          Maharastra
+Ashwini Joshi        Bangalore       Karnataka
+Hansel Colaco        Mumbai          Maharastra
+Deepak Sharma        Mangalore       Karnataka
+
+6 rows selected.
+
+SQL> select name,city,state from client_master where state not in ('Maharastra');
+
+NAME                 CITY            STATE
+-------------------- --------------- ---------------
+Ivan Bayross         Mumbai          Ma
+                                     harastra
+
+Mamta Mazumdar       Madras          Tamil Nadu
+Ashwini Joshi        Bangalore       Karnataka
+Deepak Sharma        Mangalore       Karnataka
+
+SQL> select AVG(sellprice) from product_master ;
+
+AVG(SELLPRICE)
+--------------
+    538.888889
+
+SQL> select MIN(sellprice) MIN_Price from product_master ;
+
+ MIN_PRICE
+----------
+       300
+
+SQL> select MAX(sellprice) MAX_Price from product_master ;
+
+ MAX_PRICE
+----------
+       850
+
+SQL> select count(productno) from product_master where sellprice>=500;
+
+COUNT(PRODUCTNO)
+----------------
+               5
+
+SQL> select description from product_master where QTYONHAND < REORDERLVL;
+
+no rows selected
+
+SQL> select description from product_master where QTYONHAND < REORDERLVL;
+
+no rows selected
+
+SQL> select * from product_master;
+
+PRODUC DESCRIPTION     PROFITPERCENT UNITMEASUR  QTYONHAND REORDERLVL  SELLPRICE  COSTPRICE
+------ --------------- ------------- ---------- ---------- ---------- ---------- ----------
+P00001 T-Shirts                    5 Piece             200         50        350        250
+P0345  Shirts                      6 Piece             150         50        500        350
+P06734 Cotton Jeans                5 Piece             100         20        600        450
+P07865 Jeans                       5 Piece             100         20        750        500
+P07868 Trousers                    2 Piece             150         50        850        550
+P07885 Pull Overs                2.5 Piece              80         30        700        450
+P07965 Denim Shirts                4 Piece             100         40        350        250
+P07975 Lycra Tops                  5 Piece              70         30        300        175
+P08865 Skirts                      5 Piece              75         30        450        500
+
+9 rows selected.
+
+SQL> select * from sales_order;
+
+ORDERN CLIENT ORDERDATE DELYADDR                  SALESM D B DELYDATE  ORDERSTATU
+------ ------ --------- ------------------------- ------ - - --------- ----------
+O19001 C00001 20-JUL-02 Maharastra                S00001 F N 12-JUN-04 cancelled
+O19002 C00002 27-JUN-03 Maharastra                S00002 P N 25-JUN-04 fulfilled
+O46865 C00003 20-FEB-02 Maharastra                S00003 F Y 18-FEB-04 fulfilled
+O19003 C00001 07-APR-02 Maharastra                S00001 F Y 03-APR-04 fulfilled
+O46866 C00004 22-MAY-02 Maharastra                S00001 F Y 20-MAY-04 cancelled
+O19008 C00005 26-JUL-02 Maharastra                S00004 F N 24-MAY-04 fulfilled
+
+6 rows selected.
+
+SQL> select orderdate from sales_order where to_char(ORDERDATE,'DD-MON-YY')='12-FEB-02';
+
+no rows selected
+
+SQL> SQL> select * from sales_order where to_char(ORDERDATE,'MONTH') = 'JUNE';
+SP2-0734: unknown command beginning "SQL> selec..." - rest of line ignored.
+SQL> select sysdate+15 from DUAL;
+
+SYSDATE+1
+---------
+27-OCT-23
+
+SQL>

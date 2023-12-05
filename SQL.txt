@@ -1,0 +1,35 @@
+create table salesman_master(salesmanno varchar2(6) primary key check(salesmanno like 'S%'),salesmanname varchar2(20) not null,address1 varchar2(30) not null,address2 varchar2(30),city varchar2(20), pincode number(8),state varchar2(20),salamt number(8,2) not null check(salamt not like '0'),tgttoget number(6,2) not null check(tgttoget not like '0'),ytdsales number(6,2) not null,remarks varchar2(60));
+
+create table sales_order(orderno varchar2(6) primary key check(orderno like 'O%'),clientno varchar2(6) references client_master,orderdate date not null,delyaddr varchar2(25),salesmanno varchar2(6) references salesman_master,delytype char(1) default 'F' check(delytype in ('P','F')),billyn char(1), delydate date check(delydate>orderdate),orderstatus varchar2(10) check(orderstatus in ('In Process','Fulfilled','Back Order','Cancelled'));
+
+
+
+
+
+
+create table sales_order(orderno varchar2(6) primary key check(orderno like 'O%'),clientno varchar2(6) references client_master,orderdate date not null,delyaddr varchar2(25),salesmanno varchar2(6) references salesman_master,delytype char(1) default 'F',billyn char(1), delydate date,orderstatus varchar2(10),check(delydate>orderdate), check(orderstatus in ('In Process','Fulfilled','Back Order','Cancelled'));
+
+
+ insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19001','C00001','20-July-02','Maharastra','S00001','F','N','12-June-04','In Process');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19002','C00002','27-June-03','Maharastra','S00002','P','N','25-June-04','Cancelled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O46865','C00003','20-Feb-02','Maharastra','S00003','F','Y','18-Feb-04','Fulfilled');
+
+1 row created.
+
+ insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19003','C00001','07-Apr-02','Maharastra','S00001','F','Y','03-Apr-04','Fulfilled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O46866','C00004','22-May-02','Maharastra','S00002','P','N','20-May-04','Cancelled');
+
+1 row created.
+
+SQL> insert into sales_order(orderno,clientno,orderdate,delyaddr,salesmanno,delytype,billyn,delydate,orderstatus) values('O19008','C00005','26-July-02','Maharastra','S00004','F','N','24-May-04','In Process');
+
+1 row created.
